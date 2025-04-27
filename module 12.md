@@ -1,328 +1,454 @@
-## EXP NO:1 C PROGRAM FOR ARRAY OF STRUCTURE TO CHECK ELIGIBILITY FOR THE VACCINE.
-
+# EXP NO 26: C PROGRAM TO DISPLAY STACK ELEMENTS USING LINKED LIST.
 ## Aim:
-
-To write a C program for array of structure to check eligibility for the vaccine person age above 6 years of age.
+To write a C program to display stack elements using linked list.
 
 ## Algorithm:
-   * Step 1: Declare structure eligible with age (integer) and n (character array)
-   * Step 2:	Declare variable e of type eligible
-   * Step 3: Input age and name using scanf, store in e
-   * Step 4: If e.age <= 6
-             Print "Vaccine Eligibility: No"
-             Else
-             Print "Vaccine Eligibility: Yes"
-   * Step 5: Print details (e.age, e.n)
-   * Step 6: Return 0
-
-## Program:
-```C
-#include <stdio.h>
-
-struct eligible {
-    int age;
-    char n[50];
-};
-
-int main() {
-    int i, num;
-    
-    printf("Enter number of persons: ");
-    scanf("%d", &num);
-    
-    struct eligible e[num];
-    
-    for(i = 0; i < num; i++) {
-        printf("\nEnter name of person %d: ", i + 1);
-        scanf("%s", e[i].n);
-        
-        printf("Enter age of person %d: ", i + 1);
-        scanf("%d", &e[i].age);
-    }
-    
-    printf("\n--- Vaccine Eligibility Check ---\n");
-    
-    for(i = 0; i < num; i++) {
-        printf("\nName: %s\n", e[i].n);
-        printf("Age: %d\n", e[i].age);
-        
-        if(e[i].age > 6) {
-            printf("Vaccine Eligibility: Yes\n");
-        } else {
-            printf("Vaccine Eligibility: No\n");
-        }
-    }
-    
-    return 0;
-}
-
-```
-
-
-## Output:
-![image](https://github.com/user-attachments/assets/1003533b-50e8-42fa-9967-3fbacd157a8b)
-
-
-
-## Result:
-Thus, the program is verified successfully. 
-
-
-
-## EXP NO:2 C PROGRAM FOR PASSING STRUCTURES AS FUNCTION ARGUMENTS AND RETURNING A STRUCTURE FROM A FUNCTION
-## Aim:
-To write a C program for passing structure as function and returning a structure from a function
-
-## Algorithm:
-   * Step 1:	Define structure numbers with members a and b.
-   * Step 2: Declare variable n of type numbers.
-   * Step 3: Prompt the user to enter values for a and b.
-   * Step 4: Input values for a and b into n using scanf.
-   * Step 5:	Call the add function with n as an argument.
-   * Step 6: Print the result returned by the add function.
-   * Step 7: Return 0
- 
-## Program:
-```C
-#include <stdio.h>
-
-struct numbers {
-    int a;
-    int b;
-};
-
-struct numbers add(struct numbers n) {
-    struct numbers result;
-    result.a = n.a + n.b;
-    return result;
-}
-
-int main() {
-    struct numbers n, sum;
-    
-    printf("Enter two numbers:\n");
-    scanf("%d %d", &n.a, &n.b);
-    
-    sum = add(n);
-    
-    printf("Sum = %d\n", sum.a);
-    
-    return 0;
-}
-
-
-```
-
-
-## Output:
-
-![image](https://github.com/user-attachments/assets/8f8e69ab-43bb-4e4f-b041-2851211f5590)
-
-
-## Result:
-Thus, the program is verified successfully
-
-
- 
-## EXP.NO:3 C PROGRAM TO READ A FILE NAME FROM USER AND WRITE THAT FILE USING FOPEN()
-
-## Aim:
-To write a C program to read a file name from user
-
-## Algorithm:
-   * Step 1: Include the necessary header file stdio.h.
-   * Step 2: Begin the main function.
-   * Step 3:	Declare a file pointer p.
-   * Step 4: Declare a character array name to store the file name.
-   * Step 5: Prompt the user to enter a file name.
-   * Step 6: Use scanf to input the file name into the name array.
-   * Step 7: Print a message indicating that the file with the specified name has been created successfully.
-   * Step 8: Use fopen to open a file with the name provided by the user in write mode ("w").
-   * Step 9: If successful, continue to the next step.
-   * Step 10:If unsuccessful, print an error message and exit the program with a non-zero status.
-   * Step 11:Print a message indicating that the file has been opened successfully.
-   * Step 12:Use fclose to close the file.
-   * Step 13:Print a message indicating that the file has been closed.
-   * Step 14:End the main function.
-   * Step 15:Return 0 to indicate successful program execution.
+   * Step 1.	Define a structure Node with two members: data to store the integer value and next to point to the next node in the linked list.
+   * Step 2.	Declare a global variable head representing the starting node of the linked list.
+   * Step 3.	Define a function display to print the elements of the linked list.
+   * Step 4.	Declare a pointer p and initialize it with the head of the linked list.
+   * Step 5.	Use a while loop to traverse the linked list
+   * Step 6.	Print the data of the current node.
+   * Step 7.	Move to the next node using the next pointer.
  
 ## Program:
 ```C
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-    FILE *p;
-    char name[100];
-    
-    printf("Enter the file name to create: ");
-    scanf("%s", name);
-    
-    p = fopen(name, "w");
+// Step 1: Define the structure for a node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Step 2: Declare global head pointer
+struct Node* head = NULL;
+
+// Function to push an element onto the stack
+void push(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
+}
+
+// Step 3: Define the display function
+void display() {
+    struct Node* p = head;
     
     if (p == NULL) {
-        printf("Error opening file!\n");
-        return 1; // Non-zero return indicates failure
+        printf("Stack is empty.\n");
+        return;
     }
-    
-    printf("File '%s' created and opened successfully.\n", name);
-    
-    fclose(p);
-    
-    printf("File '%s' closed successfully.\n", name);
-    
-    return 0;
+
+    printf("Stack elements are:\n");
+    // Step 5: Traverse and print
+    while (p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("\n");
 }
-
-
-```
-
-
-## Output:
-![image](https://github.com/user-attachments/assets/a817c695-7c49-4efd-9254-0e05b7e0b604)
-
-
-## Result:
-Thus, the program is verified successfully
- 
-
-
-## EXP NO:4   PROGRAM TO READ A FILE NAME FROM USER, WRITE THAT FILE AND INSERT TEXT IN TO THAT FILE
-## Aim:
-To write a C program to read, a file and insert text in that file
-## Algorithm:
-   * Step 1.	Include the necessary header file stdio.h.
-   * Step 2.	Begin the main function.
-   * Step 3. Declare a file pointer p and declare character arrays name and text and declare an integer variable num.
-   * Step 4.	Prompt the user to enter a file name and the number of strings.
-   * Step 5. Use scanf to input the file name into the name array and the number of strings into the num variable.
-   * Step 6. Use fopen to open a file with the name provided by the user in write mode ("w").
-     -	If successful, continue to the next step.
-     -	If unsuccessful, print an error message and exit the program with a non-zero status.
-   * Step 7. Print a message indicating that the file has been opened successfully.
-   * Step 8. Use a loop to input strings from the user and write them to the file using fputs.
-   * Step 9. Use fclose to close the file.
-   * Step 10. Print a message indicating that data has been added successfully.
-   * Step 11. End the main function.
-   * Step 12. Return 0 to indicate successful program execution.
- 
-## Program:
-```C
-#include <stdio.h>
-#include <stdlib.h>
 
 int main() {
-    FILE *p;
-    char name[100], text[200];
-    int num, i;
-    
-    printf("Enter the file name to create and write into: ");
-    scanf("%s", name);
-    
-    printf("Enter the number of lines you want to insert: ");
-    scanf("%d", &num);
-    
-    p = fopen(name, "w");
-    
-    if (p == NULL) {
-        printf("Error opening file!\n");
-        return 1; // Non-zero return indicates failure
-    }
-    
-    printf("File '%s' opened successfully.\n", name);
-    
-    printf("Enter the text lines:\n");
-    for(i = 0; i < num; i++) {
-        printf("Line %d: ", i + 1);
-        scanf(" %[^\n]", text); // To read a line with spaces
-        fputs(text, p);
-        fputs("\n", p); // Add a new line after each string
-    }
-    
-    fclose(p);
-    
-    printf("Data written to '%s' successfully.\n", name);
-    
+    // Pushing some elements to the stack
+    push(10);
+    push(20);
+    push(30);
+    push(40);
+
+    // Display stack elements
+    display();
+
     return 0;
 }
 
 ```
 
 ## Output:
-![image](https://github.com/user-attachments/assets/0970ab34-bc98-4111-bcf1-760068eb05cf)
+![image](https://github.com/user-attachments/assets/5ee63bba-32fb-4561-ad30-248c21a0293d)
 
 
 ## Result:
-Thus, the program is verified successfully
+Thus, the program to display stack elements using linked list is verified successfully. 
 
 
 
-## Ex No 5 : C PROGRAM TO DISPLAY STUDENT DETAILS USING STRUCTURE
-
+# EXP.NO 27: C PROGRAM TO POP AN ELEMENT FROM THE GIVEN STACK USING 
+LINKED LIST.
 ## Aim:
-The aim of this program is to dynamically allocate memory to store information about multiple subjects (name and marks), input the details for each subject, and then display the stored information. Finally, it frees the allocated memory to prevent memory leaks.
+To write a C program to pop an element from the given stack using liked list.
 
 ## Algorithm:
-   * Step 1.Input the number of subjects.
-   * Step 2.Read the integer value n from the user, which represents the number of subjects.
-   * Step 3.Dynamically allocate memory:
-   * Step 4.Use malloc to allocate memory for n subjects. Each subject has a name (array of characters) and marks (integer).
-   * Step 5.If memory allocation fails (i.e., the pointer s is NULL), display an error message and exit the program.
-   * Step 6.Input the details of each subject
-   * Step 7.Use a for loop to read the name and marks of each subject using scanf. For each subject, store the name as a string and marks as an integer in the dynamically allocated memory.
-   * Step 8.Display the details of each subject
-   * Step 9.Use another for loop to print the name and marks of each subject.
-   * Step 10.Free the allocated memory
-   * Step 11.After all operations are done, call free(s) to release the dynamically allocated memory.
-   * Step 12.Return from the main function
-   * Step 13.End the program by returning 0.
-
+   * Step 1.	Check for Empty Stack
+   * Step 2.	If head is equal to NULL, Print "Stack is empty."
+   * Step 3.	Else Proceed to the next step.
+   * Step 4.	Set head to point to the next node in the stack.
+ 
 ## Program:
 ```C
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Subject {
-    char name[50];
-    int marks;
+// Step 1: Define the structure for a node
+struct Node {
+    int data;
+    struct Node* next;
 };
 
-int main() {
-    struct Subject *s;
-    int n, i;
-    
-    printf("Enter the number of subjects: ");
-    scanf("%d", &n);
-    
-    s = (struct Subject *)malloc(n * sizeof(struct Subject));
-    
-    if (s == NULL) {
-        printf("Memory allocation failed!\n");
-        return 1; // Non-zero return indicates failure
+// Global head pointer
+struct Node* head = NULL;
+
+// Function to push an element onto the stack
+void push(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
     }
-    
-    for (i = 0; i < n; i++) {
-        printf("\nEnter name of subject %d: ", i + 1);
-        scanf("%s", s[i].name);
-        printf("Enter marks for subject %d: ", i + 1);
-        scanf("%d", &s[i].marks);
-    }
-    
-    printf("\n--- Subject Details ---\n");
-    for (i = 0; i < n; i++) {
-        printf("Subject %d: %s, Marks: %d\n", i + 1, s[i].name, s[i].marks);
-    }
-    
-    free(s);
-    
-    return 0;
+    newNode->data = value;
+    newNode->next = head;
+    head = newNode;
 }
 
+// Function to pop an element from the stack
+void pop() {
+    // Step 1 & 2: Check if stack is empty
+    if (head == NULL) {
+        printf("Stack is empty. Cannot pop.\n");
+        return;
+    }
+
+    // Step 4: Pop the element
+    struct Node* temp = head;
+    printf("Popped element: %d\n", temp->data);
+    head = head->next;
+    free(temp);
+}
+
+// Function to display stack elements
+void display() {
+    struct Node* p = head;
+    
+    if (p == NULL) {
+        printf("Stack is empty.\n");
+        return;
+    }
+
+    printf("Stack elements are:\n");
+    while (p != NULL) {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    // Push some elements
+    push(10);
+    push(20);
+    push(30);
+    push(40);
+
+    // Display current stack
+    display();
+
+    // Pop elements
+    pop();
+    pop();
+
+    // Display updated stack
+    display();
+
+    return 0;
+}
 
 ```
 
 ## Output:
-![image](https://github.com/user-attachments/assets/19372f6c-b966-45ca-9f90-dc23afbc26e6)
+![image](https://github.com/user-attachments/assets/74d9fe1d-2911-45a9-8407-d4655d1c40cd)
+
+
+
 
 ## Result:
-Thus, the program is verified successfully
+Thus, the program to pop an element from the given stack using liked list is verified successfully.
+
+ 
+# EXP NO:28 C PROGRAM TO DISPLAY QUEUE ELEMENTS USING LINKED LIST.
+## Aim:
+To write a C program to display queue elements using linked list.
+## Algorithm:
+   * Step 1.	Check if Queue is Empty
+   * Step 2.	Display Queue Elements
+   * Step 3.	Print the data of the current node pointed to by front
+   * Step 4.	Update front to point to the next node.
+   * Step 5.	End the display function.
+ 
+## Program:
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+// Step 1: Define the structure for a node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Global pointers for front and rear
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+// Function to enqueue (insert) an element into the queue
+void enqueue(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    newNode->data = value;
+    newNode->next = NULL;
+    
+    if (rear == NULL) { // Queue is empty
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
+}
+
+// Step 2: Function to display queue elements
+void display() {
+    // Step 1: Check if Queue is Empty
+    if (front == NULL) {
+        printf("Queue is empty.\n");
+        return;
+    }
+
+    struct Node* temp = front;
+    printf("Queue elements are:\n");
+    
+    // Step 2-4: Traverse and print
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next; // Step 4: Update to next node
+    }
+    printf("\n");
+}
+
+int main() {
+    // Insert some elements into the queue
+    enqueue(5);
+    enqueue(10);
+    enqueue(15);
+    enqueue(20);
+
+    // Display the queue
+    display();
+
+    return 0;
+}
+
+```
+
+## Output:
+
+![image](https://github.com/user-attachments/assets/023be544-c855-428b-bd47-80397eb88bfc)
+
+## Result:
+Thus, the program to display queue elements using linked list is verified successfully.
+
+
+ 
+# EXP NO:29 C PROGRAM TO INSERT ELEMENTS IN QUEUE USING LINKED LIST
+
+## Aim:
+To write a C program to insert elements in queue using linked list
+
+## Algorithm:
+   * Step 1.	Allocate Memory for New Node
+   * Step 2.	Set Data and Next Pointer
+   * Step 3.	Check if Queue is Empty
+   * Step 4.	Set both front and rear to point to the new node p.
+   * Step 5.	Set the next pointer of the current rear to point to the new node p.
+   * Step 6.	End of Enqueue Operation
+ 
+## Program:
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+// Step 1: Define the structure for a node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Global pointers for front and rear
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+// Step 1 to Step 6: Function to insert (enqueue) elements in the queue
+void enqueue(int value) {
+    // Step 1: Allocate Memory for New Node
+    struct Node* p = (struct Node*)malloc(sizeof(struct Node));
+    if (p == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+
+    // Step 2: Set Data and Next Pointer
+    p->data = value;
+    p->next = NULL;
+
+    // Step 3: Check if Queue is Empty
+    if (rear == NULL) {
+        // Step 4: Set both front and rear to point to p
+        front = rear = p;
+    } else {
+        // Step 5: Set the next pointer of the current rear to p
+        rear->next = p;
+        rear = p;
+    }
+}
+
+// Function to display the queue (for verification)
+void display() {
+    struct Node* temp = front;
+    if (front == NULL) {
+        printf("Queue is empty.\n");
+        return;
+    }
+    printf("Queue elements are:\n");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+
+    display();
+
+    return 0;
+}
+
+```
+## Output:
+
+![image](https://github.com/user-attachments/assets/9f8cdbf4-a1ec-4d77-bec5-4220eecdccbd)
+
+
+## Result:
+Thus, the program to insert elements in queue using linked list is verified successfully.
+
+
+
+# EXP NO:30 C FUNCTION TO FIND THE PEEK OF QUEUE USING LINKED LIST.
+
+
+## Aim:
+
+The aim of this function is to retrieve the "peek" (the front element) of a queue implemented using a linked list
+
+## Algorithm:
+   * Step 1.	Check if the queue is empty:
+      - If the queue is empty (i.e., the front pointer is NULL), return an error or a message indicating that the queue is empty.
+   * Step 2.	Access the front element:
+      - If the queue is not empty, return the data stored in the front node of the linked list (i.e., the element at the head of the queue).
+
+## Program:
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+// Step 1: Define the structure for a node
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Global pointers for front and rear
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+// Function to insert (enqueue) elements into the queue
+void enqueue(int value) {
+    struct Node* p = (struct Node*)malloc(sizeof(struct Node));
+    if (p == NULL) {
+        printf("Memory allocation failed\n");
+        return;
+    }
+    p->data = value;
+    p->next = NULL;
+    
+    if (rear == NULL) {
+        front = rear = p;
+    } else {
+        rear->next = p;
+        rear = p;
+    }
+}
+
+// Step 2: Function to peek at the front element
+int peek() {
+    if (front == NULL) {
+        printf("Queue is empty.\n");
+        return -1;  // Returning -1 as an indicator of empty queue
+    } else {
+        return front->data;
+    }
+}
+
+// Function to display queue elements
+void display() {
+    struct Node* temp = front;
+    if (temp == NULL) {
+        printf("Queue is empty.\n");
+        return;
+    }
+    printf("Queue elements are:\n");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    enqueue(5);
+    enqueue(15);
+    enqueue(25);
+
+    display();
+
+    // Peek the front element
+    int front_element = peek();
+    if (front_element != -1)
+        printf("Peek (Front Element) of Queue: %d\n", front_element);
+
+    return 0;
+}
+
+```
+
+## Output:
+
+![image](https://github.com/user-attachments/assets/53813477-e8ae-47d2-bb12-5e17e0e22c36)
+
+## Result:
+
+Thus, the program to retrieve the "peek" (the front element) of a queue implemented using a linked list is verified successfully.
+
+
